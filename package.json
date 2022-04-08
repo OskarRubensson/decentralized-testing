@@ -1,0 +1,23 @@
+{
+  "name": "decentralized-testing",
+  "version": "1.0.0",
+  "description": "Tests the decentralized websites created using decentralized-website",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OskarRubensson/decentralized-testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OskarRubensson/decentralized-testing/issues"
+  },
+  "homepage": "https://github.com/OskarRubensson/decentralized-testing#readme",
+  "devDependencies": {
+    "selenium-webdriver": "^4.1.1"
+  }
+}
