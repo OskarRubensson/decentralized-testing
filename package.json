@@ -4,7 +4,9 @@
   "description": "Tests the decentralized websites created using decentralized-website",
   "main": "test.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node client/test.js",
+    "client": "nodemon client/client.js",
+    "server": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,13 @@
   "homepage": "https://github.com/OskarRubensson/decentralized-testing#readme",
   "devDependencies": {
     "selenium-webdriver": "^4.1.1"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "http": "^0.0.1-security",
+    "hypercore-fetch": "^8.5.0",
+    "nodemon": "^2.0.15",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
   }
 }
