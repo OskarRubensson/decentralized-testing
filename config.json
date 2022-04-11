@@ -1,14 +1,17 @@
 {
   "hyper": {
     "mainpage": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/",
-    "pic": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/pics"
+    "pic": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/pics",
+    "video": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/videos"
   },
   "ipfs": {
-    "mainpage": "https://ipfs.io/ipfs/bafybeic2u33njikmrlzvagxxjoufcdplsfjhwbeawtl5i2noqkd6cljlma/",
-    "pic": "https://ipfs.io/ipfs/bafybeic2u33njikmrlzvagxxjoufcdplsfjhwbeawtl5i2noqkd6cljlma/#/pics"
+    "mainpage": "https://decentralized-website.vercel.app/#/",
+    "pic": "https://decentralized-website.vercel.app/#/pics",
+    "video": "https://decentralized-website.vercel.app/#/videos"
   },
   "http": {
     "mainpage": "http://www.orubensson.se/",
-    "pic": "http://www.orubensson.se/#/pics"
+    "pic": "http://www.orubensson.se/#/pics",
+    "video": "http://www.orubensson.se/#/videos"
   }   
 }
