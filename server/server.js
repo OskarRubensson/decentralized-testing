@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('https');
+const http = require('http');
 const writeJson = require('./fileWriter');
 
 const app = express();
