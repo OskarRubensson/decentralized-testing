@@ -36,16 +36,16 @@ function testSite(name, url){
 return new Promise( async (resolve, reject) => {
     const driver = await new webdriver.Builder()
         .forBrowser('chrome')
-        .setChromeOptions(new chrome.Options().addArguments(['--disable-dev-shm-usage']))
+        .setChromeOptions(new chrome.Options().addArguments(['headless', '--no-sandbox', '--disable-dev-shm-usage']))
         .build();
 
-    driver.get(url);
+    await driver.get(url);
     
     driver.sleep(5000).then(() => {
       driver.wait(() => driver.executeScript('return document.readyState').then((readyState) => readyState === 'complete' )).then(() => {
         driver.executeScript("return window.performance.timing.loadEventStart - window.performance.timing.navigationStart;").then((time) => {
           console.log(`${name} took ${time}ms to load`);
-          driver.quit();
+          // driver.quit();
           resolve(time);
         });
       });

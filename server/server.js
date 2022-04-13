@@ -16,6 +16,7 @@ const io = socket(server, {
 
 let runningClients = [];
 let times = {};
+let sender;
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -28,6 +29,7 @@ io.on('connection', (socket) => {
     console.log("Starting tests...")
     times = {};
     socket.broadcast.emit('begin test');
+    sender = socket.id;
   })
 
   socket.on('starting test', () => {
@@ -37,12 +39,17 @@ io.on('connection', (socket) => {
 
   socket.on('test complete', time => {
     appendTime(time);    
-    
-    console.log(socket.id + " finished test", "Currently running: " + runningClients.length);
 
-    runningClients = runningClients.filter(id => id !== socket.id);
+    runningClients = runningClients.filter(id => id !== socket.id);    
+    console.log(socket.id + " finished test", runningClients.length ? "Currently running: " + runningClients.length : "No more running clients");
+
     if(runningClients.length === 0) {
       writeJson(times);
+      if (io.sockets.sockets.get(sender)) {
+        console.log("sending to start-instance that test is complete...");
+        io.sockets.sockets.get(sender).emit('test complete', times);
+      }else
+        console.log("No start-instance to send to");
     }
   })
 })
