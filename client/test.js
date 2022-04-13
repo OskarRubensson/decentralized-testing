@@ -31,15 +31,17 @@ function runTest(){
   
 }
 
+runTest();
 function testSite(name, url){
-  return new Promise( (resolve, reject) => {
-    const driver = new webdriver.Builder()
-        .forBrowser('firefox')
+return new Promise( async (resolve, reject) => {
+    const driver = await new webdriver.Builder()
+        .forBrowser('chrome')
+        .usingServer('http://localhost:4444/wd/hub/')
         .build();
 
     driver.get(url);
     
-    driver.sleep(10000).then(() => {
+    driver.sleep(5000).then(() => {
       driver.wait(() => driver.executeScript('return document.readyState').then((readyState) => readyState === 'complete' )).then(() => {
         driver.executeScript("return window.performance.timing.loadEventStart - window.performance.timing.navigationStart;").then((time) => {
           console.log(`${name} took ${time}ms to load`);
