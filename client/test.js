@@ -31,12 +31,10 @@ function runTest(){
   
 }
 
-runTest();
 function testSite(name, url){
 return new Promise( async (resolve, reject) => {
     const driver = await new webdriver.Builder()
-        .forBrowser('chrome')
-        .usingServer('http://localhost:4444/wd/hub/')
+        .forBrowser('firefox')
         .build();
 
     driver.get(url);
