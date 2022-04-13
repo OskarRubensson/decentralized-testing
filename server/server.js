@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');
+const http = require('https');
 const writeJson = require('./fileWriter');
 
 const app = express();
@@ -63,4 +63,4 @@ function appendTime(time) {
   }
 }
 
-server.listen(process.env.PORT || 8000, () => console.log(`server is running on port ${process.env.PORT || 8000}`));
+server.listen(process.env.PORT || 8000, "0.0.0.0", () => console.log(`server is running on port ${process.env.PORT || 8000}`));

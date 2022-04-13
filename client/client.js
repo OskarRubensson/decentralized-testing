@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-let socketClient = io("http://localhost:8000");
+let socketClient = io("https://decentralized-testing-server.herokuapp.com");
 let runTest = require("./test");
 
 socketClient.on("connect", () => {
