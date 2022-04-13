@@ -2,6 +2,7 @@ const webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until,
     logging = webdriver.logging;
+const chrome = require('selenium-webdriver/chrome');
 const config = require('../config.json');
 
 function runTest(){
@@ -35,6 +36,7 @@ function testSite(name, url){
 return new Promise( async (resolve, reject) => {
     const driver = await new webdriver.Builder()
         .forBrowser('chrome')
+        .setChromeOptions(new chrome.Options().addArguments(['--headless','--no-sandbox', '--disable-dev-shm-usage']))
         .build();
 
     driver.get(url);
