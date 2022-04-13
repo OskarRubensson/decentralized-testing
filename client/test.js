@@ -34,7 +34,7 @@ function runTest(){
 function testSite(name, url){
 return new Promise( async (resolve, reject) => {
     const driver = await new webdriver.Builder()
-        .forBrowser('firefox')
+        .forBrowser('chrome')
         .build();
 
     driver.get(url);
