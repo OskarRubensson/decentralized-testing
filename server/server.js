@@ -21,6 +21,7 @@ io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('user disconnected');
+    runningClients = runningClients.filter(id => id !== socket.id);
   });
 
   socket.on('start', () => {
