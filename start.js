@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-const fileWriter = require("./server/fileWriter");
+const writeJson = require("./server/fileWriter");
 let socketClient = io("wss://decentralized-testing-server.herokuapp.com/");
 
 socketClient.on("connect", () => {
@@ -7,7 +7,6 @@ socketClient.on("connect", () => {
   socketClient.emit("start");
 });
 
-socketClient.on("test complete", (times) => {
-  fileWriter.writeJson(times);
-  process.exit(1);
+socketClient.on("test complete", async (times) => {
+  writeJson(times);
 })
