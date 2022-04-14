@@ -1,6 +1,7 @@
 #!/bin/bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 . ~/.nvm/nvm.sh
+source ~/.bashrc
 nvm install node
 sudo yum -y update
 sudo yum -y install git
