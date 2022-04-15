@@ -1,8 +1,8 @@
 {
   "hyper": {
-    "mainpage": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/",
-    "pic": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/pics",
-    "video": "http://localhost:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/videos"
+    "mainpage": "http://host.docker.internal:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/",
+    "pic": "http://host.docker.internal:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/pics",
+    "video": "http://host.docker.internal:4973/hyper/1bd0528e689e4f4b2686b62bb1ecc50372aa6e22cc03d1d80cc8cd5c5104e03a/#/videos"
   },
   "ipfs": {
     "mainpage": "https://crimson-hat-9158.on.fleek.co/#/",
