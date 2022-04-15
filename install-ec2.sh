@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/bash -xe
+exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 ################ This is the script that is run when the EC2-instances are launched ################
-
+cd ~
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 . ~/.nvm/nvm.sh
 source ~/.bashrc
