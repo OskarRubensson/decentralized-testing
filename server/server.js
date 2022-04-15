@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
 
   socket.on('start', () => {
     console.log("Starting tests...")
+    runningClient = [];
     times = {};
     socket.broadcast.emit('begin test');
     sender = socket.id;
