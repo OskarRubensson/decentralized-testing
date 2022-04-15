@@ -5,7 +5,7 @@ USER root
 RUN apk update && apk add nodejs && apk add chromium && apk add chromium-chromedriver
 
 RUN mkdir data && mkdir data/decentralized-testing
-ADD decentralized-testing/ /data/decentralized-testing
+ADD ./ /data/decentralized-testing
 WORKDIR /data/decentralized-testing
 
 # optionally if you want to run npm global bin without specifying path
