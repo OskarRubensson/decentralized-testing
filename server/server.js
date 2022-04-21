@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('client count', () => {
+  socket.on('client count', async () => {
     let clients = await io.in(TESTROOM).fetchSockets();
     socket.emit('client count', clients.length);
   })
