@@ -1,5 +1,8 @@
 const io = require("socket.io-client");
-let socketClient = io("wss://decentralized-testing-server.herokuapp.com/"); // For docker container locally: http://host.docker.internal:8000 
+let socketClient = io("ws://ec2-16-170-254-219.eu-north-1.compute.amazonaws.com:8000"); 
+// For docker container locally: http://host.docker.internal:8000 
+// For AWS EC2 instance: ws://ec2-16-170-254-219.eu-north-1.compute.amazonaws.com:8000
+// For Heroku: wss://decentralized-testing-server.herokuapp.com/
 let testSite = require("./test");
 
 socketClient.on("connect", () => {
@@ -13,6 +16,7 @@ socketClient.on("disconnect", () => {
 
 socketClient.on("run test", (config) => {
   socketClient.emit("starting test");
+  console.log("Starting test with config: ", config)
   testSite(config.name, config.url).then(time => {
     socketClient.emit("test complete", {...config, time});
   }).catch(() => socketClient.emit("test failed"));

@@ -12,7 +12,7 @@ return new Promise( async (resolve, reject) => {
         .setChromeOptions(new chrome.Options().addArguments(['headless', '--no-sandbox', '--disable-dev-shm-usage']))
         .build();
 
-    await driver.get(url);
+    await driver.get(url).catch(() => reject());
     
     driver.sleep(5000).then(() => {
       driver.wait(() => driver.executeScript('return document.readyState').then((readyState) => readyState === 'complete' )).then(() => {
