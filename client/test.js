@@ -5,33 +5,6 @@ const webdriver = require('selenium-webdriver'),
 const chrome = require('selenium-webdriver/chrome');
 const config = require('../config.json');
 
-function runTest(){
-  /*await testSite(config.hyper[0].name, config.hyper[0].url);
-  await testSite(config.hyper[1].name, config.hyper[1].url);
-  await testSite(config.ipfs[0].name, config.ipfs[0].url);
-  await testSite(config.ipfs[1].name, config.ipfs[1].url);*/
-  return new Promise(async (resolve, reject) => {
-    let times = {};
-    for(let protocol in config) {
-      console.log("Testing " + protocol);
-      let protocolTimes = {};
-
-        // Run tests and put times in protocolTimes
-      let protocolJson = config[protocol];
-      for(let key in config[protocol]) {
-        let url = protocolJson[key];
-        await testSite(key, url).then(time => protocolTimes = {... protocolTimes, [key]: time});
-      }
-
-        // Add protocolTimes to times
-      times = {... times, [protocol]: protocolTimes};
-      console.log("");
-    }
-    resolve(times);
-  })
-  
-}
-
 function testSite(name, url){
 return new Promise( async (resolve, reject) => {
     const driver = await new webdriver.Builder()
@@ -48,9 +21,9 @@ return new Promise( async (resolve, reject) => {
           await driver.quit();
           resolve(time);
         });
-      });
+      }).catch(() => reject());
     })
   });
 }
 
-module.exports = runTest;
+module.exports = testSite;
