@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-let socketClient = io("http://host.docker.internal:8000");
+let socketClient = io("wss://decentralized-testing-server.herokuapp.com/"); // For docker container locally: http://host.docker.internal:8000 
 let testSite = require("./test");
 
 socketClient.on("connect", () => {
