@@ -17,17 +17,58 @@ const io = socket(server, {
 let runningClients = [];
 let times = {};
 let sender;
+const TESTROOM = 'tester';
+const CLIENTROOM = 'client';
+let runningTest = false;
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
     runningClients = runningClients.filter(id => id !== socket.id);
   });
 
+  // Connect testers to their own room
+  socket.on("tester connect", () => {
+    socket.join(TESTROOM);
+    console.log("User assigned as tester", `Currently ${io.sockets.adapter.rooms.get(TESTROOM).size} testers`);
+  });
+  
+  // Connect clients to their own room
+  socket.on("client connect", () => {
+    socket.join(CLIENTROOM);
+    console.log("User assigned as client", `Currently ${io.sockets.adapter.rooms.get(CLIENTROOM).size} clients`);
+  });
+
+  // Start test according to config
+  socket.on('begin test', async config => {
+    if (!config.protocol || !config.url || !config.name) {
+      console.log("invalid config: ", config);
+      return;
+    }
+    
+    let testers = await io.in(TESTROOM).fetchSockets();
+    config.amount > 0 ? testers = testers : testers = testers.slice(0, config.amount);
+
+    console.log(`running test on ${testers.length} tester(s) with config: `, config);
+    for (let tester of testers) {
+      tester.emit('run test', config);
+      runningTest = true;
+    }
+  })
+
+  socket.on('client count', () => {
+    let clients = await io.in(TESTROOM).fetchSockets();
+    socket.emit('client count', clients.length);
+  })
+
+
+
+
   socket.on('start', () => {
     console.log("Starting tests...")
-    runningClient = [];
+    runningClients = [];
     times = {};
     socket.broadcast.emit('begin test');
     sender = socket.id;
