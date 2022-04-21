@@ -1,0 +1,133 @@
+:root {
+    font-family: sans-serif;
+    --bg-color: #fafafa;
+    --sec-color: #fafafa;
+    --border-radius: 8px;
+    --border-color: gray;
+    --border-size: 2px;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Micro reset */
+/* ------------------------------------------------------------------------ */
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background-color: aliceblue;
+}
+
+/* ------------------------------------------------------------------------ */
+/* General styles */
+/* ------------------------------------------------------------------------ */
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+header {
+    width: 100%;
+    height: 90px;
+
+    background-color: aquamarine;
+}
+
+header h1 {
+    margin-left: 1em;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+
+    width: 50%;
+    height: 100vh;
+
+}
+
+.status-sidebar {
+    background-color: red;
+}
+
+.main {
+    padding: 2em;
+}
+
+.status {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    line-height: 50px;
+
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    margin-top: 10px;
+
+    border-radius: var(--border-radius);
+    padding: 1.5em;
+
+    box-shadow: 0 1px 4px 0px rgb(204 197 185 / 50%);
+}
+
+.status-text-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.status-text-wrapper h3 {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.status-text-wrapper h3:first-child {
+    margin-left: 10px;
+}
+
+.status-text-wrapper span {
+    margin-left: 10px;
+}
+
+.controllers {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    margin-top: 20px;
+
+    border-radius: var(--border-radius);
+    padding: 1.5em;
+
+    box-shadow: 0 1px 4px 0px rgb(204 197 185 / 50%);
+}
+
+.controllers h3 {
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    height: 300px;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+    border-radius: var(--border-radius);
+    border: var(--border-size) solid var(--border-color);
+    padding: 0 10px;
+}
+
+input[type="submit"] {
+    width: 20%;
+}
