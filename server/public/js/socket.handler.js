@@ -16,7 +16,7 @@ socket.on('test complete', (response) => {
     console.log("Test complete: ", response);
     var keys = Object.keys(response);
     keys.map(key => {
-        var values = Object.values(response[key]);
+        var values = response[key];
         localStorage.setItem(key, JSON.stringify(values));
     });
 });
