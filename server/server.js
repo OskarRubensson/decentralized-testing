@@ -40,9 +40,10 @@ io.on('connection', (socket) => {
   // Connect clients to their own room
   socket.on("client connect", () => {
     socket.join(CLIENTROOM);
-    console.log("User assigned as client", `Currently ${io.sockets.adapter.rooms.get(TESTROOM)?.size | 0} clients`);
+    console.log("User assigned as client", `Currently ${io.sockets.adapter.rooms.get(CLIENTROOM).size | 0} clients`);
     socket.emit('tester count', io.sockets.adapter.rooms.get(TESTROOM)?.size | 0);
     socket.emit('test started', io.sockets.adapter.rooms.get(RUNNINGTESTER)?.size | 0);
+    socket.emit('test complete', times);
   });
 
   // Start test according to config
@@ -60,6 +61,11 @@ io.on('connection', (socket) => {
     appendTime(result);
     handleTestDone();
   })
+
+  socket.on('clear result', () => {
+    console.log("Result was cleared");
+    times = {};
+  });
 
   const beginTest = async config => {
     if (!config.protocol || !config.url || !config.name) {
