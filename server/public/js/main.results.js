@@ -17,15 +17,27 @@ function init() {
 function createMeasureResultDiv(key, data) {
     const content = document.querySelector('.content');
     const div = document.createElement('div');
-    const table = document.createElement('table');
+    const table = document.createElement('div');
     div.className = 'controllers';
     div.id = key;
     div.innerHTML = `<h3>${key} (ms)</h3>`;
 
     table.id = 'result-table-' + key;
+    table.className = 'result-table';
     div.appendChild(table);
     content.appendChild(div);
-    setTimeout(() => {
-        loadTable(table.id, data, false, ['Type', 'Time (ms)']); 
-    }, 10);
+    // setTimeout(() => {
+    //     loadTable(table.id, data, false, ['Type', 'Time (ms)']); 
+    // }, 10);
+    data.map(measurement => {
+        const element = createMeasurmentElement(measurement);
+        table.appendChild(element);
+    });
+}
+
+function createMeasurmentElement(data) {
+    const div = document.createElement('div');
+    div.className = 'measurement';
+    div.innerHTML = `<h3>${data}</h3>`;
+    return div;
 }
