@@ -155,6 +155,9 @@ input[type="button"] {
 
 select {
     width: 8em;
+    padding: 0.4em;
+    border-radius: var(--border-radius);
+    border: var(--border-size) solid var(--border-color);
 }
 
 
@@ -203,5 +206,5 @@ th, td {
 }
 .measurement {
     padding: 1em;
-    
+
 }
