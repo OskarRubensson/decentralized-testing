@@ -1,0 +1,6 @@
+version: "1.0"
+services:
+  ipfs:
+    build: .
+    ports:
+      - "8000:500"

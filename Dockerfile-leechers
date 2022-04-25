@@ -17,12 +17,6 @@ ENV PATH=$PATH:/home/root/.npm-global/bin
 
 RUN apk --no-cache add --virtual python
 RUN npm config set python /usr/bin/python
-# RUN npm i -g npm
 RUN npm install
-# RUN npm install -g hyper-gateway
 
 CMD ["npm", "run", "client"]
-
-# EXPOSE 4444:4444
-# EXPOSE 5900:5900
-# EXPOSE 80:80
