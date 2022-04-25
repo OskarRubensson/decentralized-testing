@@ -11,14 +11,19 @@
     $(`#${tableID} tr`).remove(); 
     if(data == null || tableID == null || isHeader == null) return;
     let table = document.getElementById(tableID);
-    let row, id = 0;
-    let column;
+    let id = 0;
+    let column, tolerance = 10;
+    let row = document.createElement('tr');
 
     for(let i = 0; i < data.length; i++) {
+        if(i % tolerance == 0) {
+            table.appendChild(row);
+            row = table.insertRow(-1);
+        }
         column = document.createElement('th');
         column.innerHTML = data[i];
-        table.appendChild(column);
-    }  
+        row.appendChild(column);
+    }
     if(!isHeader) return;
     var header = table.createTHead();
     row = header.insertRow(0);
