@@ -49,6 +49,7 @@ function setLocalStorage(key, value) {
  * Function for clearing the measured result on the server and in local storage
  */
 function clearAllMeasureResults() {
+    if(!confirm('Are you sure you want to clear all results?')) return;
     localStorage.clear();
     socket.emit('clear result');
 }
@@ -56,14 +57,21 @@ function clearAllMeasureResults() {
  * Function for clearing the measured result in local storage
  */
 function clearLocalMeasureResults() {
+    if(!confirm('Are you sure you want to clear local results?')) return;
     localStorage.clear();
 }
-
+/**
+ * Function for navigating to the result page
+ * @param {string} key - key that is a string, that can be http, hyper and ipfs 
+ */
 function navigate(key) {
     setResultToShow(key);
     window.location.href = '/server/public/result.html';
 }
-
+/**
+ * Function for setting local storage key showResult for the result page
+ * @param {string} key 
+ */
 function setResultToShow(key) {
     setLocalStorage('showResult', key);
 }
