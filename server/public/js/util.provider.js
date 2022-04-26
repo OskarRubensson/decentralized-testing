@@ -1,3 +1,4 @@
+
 var inputIndex = 0;
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('send-data-btn').addEventListener('click', (e) => {
@@ -17,6 +18,8 @@ window.addEventListener('DOMContentLoaded', () => {
         data.ipfs = ipfsData;
         data.hyper = hyperData;
         console.log(data);
+
+        socket.emit('seeder config', data);
     });
 });
 /**
