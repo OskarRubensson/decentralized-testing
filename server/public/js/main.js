@@ -64,9 +64,9 @@ function clearLocalMeasureResults() {
  * Function for navigating to the result page
  * @param {string} key - key that is a string, that can be http, hyper and ipfs 
  */
-function navigate(key) {
+function navigate(key, filename) {
     setResultToShow(key);
-    window.location.href = '/server/public/result.html';
+    window.location.href = '/server/public/' + filename;
 }
 /**
  * Function for setting local storage key showResult for the result page

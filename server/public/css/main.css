@@ -6,6 +6,8 @@
     --border-color: gray;
     --border-size: 2px;
     --danger-color: #ff0000;
+    --success-color: #00ff00;
+    --primary-color: #0080ff;
     --border-radius-btn: 8px;
 }
 
@@ -187,6 +189,28 @@ select {
 
 .btn-danger:hover {
     background-color: #d14545;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: black;
+}
+
+.btn-success:hover {
+    background-color: #61d145;
+    color: black;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4a88c5;
     color: white;
     cursor: pointer;
 }

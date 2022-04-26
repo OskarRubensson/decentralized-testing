@@ -35,6 +35,7 @@
                     <div class="status results-btn">
                         <button id="clear-results-btn" class="btn btn-danger">Clear all results</button>
                         <button id="clear-local-results-btn" class="btn btn-danger">Clear local results</button>
+                        <button id="providers-btn" class="btn btn-primary" onclick="navigate('', 'provider.html')">Providers</button>
                     </div>
                 </div>
                 <div class="controllers">
@@ -58,7 +59,7 @@
                         <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
 
                         <input type="submit" value="Start test" disabled>
-                        <input type="button" value="Se result" onclick="navigate('ipfs')">
+                        <input type="button" value="See result" onclick="navigate('ipfs', 'result.html')">
                     </form>
                 </div>
                 <div class="controllers">
@@ -82,7 +83,7 @@
                         <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
 
                         <input type="submit" value="Start test">
-                        <input type="button" value="Se result" onclick="navigate('hyper')">
+                        <input type="button" value="See result" onclick="navigate('hyper', 'result.html')">
                     </form>
                 </div>
                 <div class="controllers">
@@ -106,7 +107,7 @@
                         <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
 
                         <input type="submit" value="Start test">
-                        <input type="button" value="Se result" onclick="navigate('http')">
+                        <input type="button" value="See result" onclick="navigate('http', 'result.html')">
                     </form>
                 </div>
             </div>
