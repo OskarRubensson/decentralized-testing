@@ -26,9 +26,7 @@ function createMeasureResultDiv(key, data) {
     table.className = 'result-table';
     div.appendChild(table);
     content.appendChild(div);
-    // setTimeout(() => {
-    //     loadTable(table.id, data, false, ['Type', 'Time (ms)']); 
-    // }, 10);
+
     data.map(measurement => {
         const element = createMeasurmentElement(measurement);
         table.appendChild(element);
