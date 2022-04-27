@@ -28,49 +28,62 @@ socketClient.on("init seeders", async (config) => {
   console.log('new config recieved... clearing all containers');
   await clearContainers();
 
+  for (let protocol in config) {
+    await initProtocolSeeder(protocol, config[protocol])
+  }
+
+  console.log("\nSeeders initialized with config: \n", config);
+  socketClient.emit("seeders initialized");
+});
+
+async function initProtocolSeeder(protocol, config) {
+  console.log(`Initializing ${protocol} seeders...`);
+  if (protocol != "ipfs" && protocol != "hyper")
+    return false;
+
+  let seedCmd = protocol === 'ipfs' ? 'ipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
+
   // Find max amount of instances needed
   let amount = 0;
-  for (let key in config.ipfs) {
-    amount = config.ipfs[key] > amount ? amount = config.ipfs[key] : amount;
+  for (let key in config) {
+    amount = config[key] > amount ? amount = config[key] : amount;
   }
 
   // Create amount-number of instances
   for (let i = 0; i < amount && i < maxContainers; i++) {
-    await docker.createContainer({
-      Image: "ipfs/go-ipfs",
-      name: `ipfs-${i}`
-    }).then(container => {
+    await createContainer(protocol, i).then(container => {
       containers.push(container);
+      return container.start();
     })
   }
 
   // Start all containers
-  for (let container of containers) {
-    await container.start();
-  }
+  //for (let container of containers) {
+    //console.log("hej");
+  //}
 
-  // Give ipfs-daemon time to start
+  // Give daemon time to start
   setTimeout(() => {
 
     // Pin hash according to the config
-    for (let key in config.ipfs) {
-      let desiredPins = config.ipfs[key];
+    for (let key in config) {
+      let desiredPins = config[key];
       
       for (let i = 0; i < desiredPins; i++) {
         let container = containers[i];
-        let cmd = `ipfs pin add ${key}`;
+        let cmd = `${seedCmd} ${key}`;
         runExec(container, cmd);
       }
     }
+  }, 10000)
+}
 
-    console.log("\nSeeders initialized with config: \n", config);
-    socketClient.emit("seeders initialized");
-  }, 5000)
-});
-
-init();
-async function init() {
-  
+function createContainer(protocol, index) {
+  let image = protocol == "ipfs" ? "ipfs/go-ipfs" : "toastaren/hypercore-cli:latest";
+  return docker.createContainer({
+    Image: image,
+    name: `${protocol}-${index}`
+  });
 }
 
 function clearContainers() {
@@ -95,10 +108,11 @@ function clearContainers() {
 function runExec(container, cmd) {
 
   var options = {
-    Cmd: ['sh', '-c', cmd],
+    Cmd: ["sh", "-c", cmd],
     AttachStdout: true,
     AttachStderr: true
   };
+
   container.exec(options, function (err, exec) {
     if (err) return;
     exec.start(function (err, stream) {

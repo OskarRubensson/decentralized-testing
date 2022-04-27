@@ -1,0 +1,22 @@
+FROM node:14-alpine as gitter
+
+RUN apk update && \
+  apk add --update git
+RUN git clone https://github.com/KougatSundew/cli.git
+
+FROM node
+
+# ENV PATH=$PATH:/home/node/.npm-global/bin
+
+COPY --from=gitter /cli /cli
+
+USER root
+WORKDIR /cli
+
+RUN cd /cli && \
+  npm config set user root && \
+  npm install && \
+  alias "hyp"="node /cli/bin/hyp" && \
+  printf "node /cli/bin/hyp daemon start\nsleep infinity\n" > entrypoint.sh
+
+CMD ["/bin/sh", "entrypoint.sh"]
