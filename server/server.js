@@ -7,6 +7,7 @@ const server = http.createServer(app);
 console.log(process.env.NODE_ENV === 'production' ? 'Running on production' : 'Running in development');
 
 const socket = require('socket.io');
+const { SocketAddress } = require('net');
 
 const io = socket(server, {
 	cors: {
@@ -18,7 +19,9 @@ let times = {};
 const TESTROOM = 'tester';
 const CLIENTROOM = 'client';
 const RUNNINGTESTER = 'running testers';
+const SEEDERROOM = 'seeder';
 let runningTest = false;
+let initSeeders = true;
 let testQueue = [];
 
 io.on('connection', (socket) => {
@@ -45,6 +48,25 @@ io.on('connection', (socket) => {
     socket.emit('test started', io.sockets.adapter.rooms.get(RUNNINGTESTER)?.size | 0);
     socket.emit('test complete', times);
   });
+
+  socket.on("seeder connect", () => {
+    socket.join(SEEDERROOM);
+    console.log("User assigned as seeder", `Currently ${io.sockets.adapter.rooms.get(SEEDERROOM).size | 0} seeder`);
+  })
+
+  socket.on("seeder config", (config) => {
+    console.log("Seeder config received", config);
+    initSeeders = true;
+    io.in(SEEDERROOM).emit("init seeders", config);
+  })
+
+  socket.on("seeders initialized", () => {
+    console.log("Seeders initialized");
+    initSeeders = false;
+    if (testQueue.length > 0) {
+      beginTest(testQueue.shift());
+    }
+  })
 
   // Start test according to config
   socket.on('begin test', config => beginTest(config));

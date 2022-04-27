@@ -1,0 +1,13 @@
+FROM node:latest
+
+ENV PATH=$PATH:/home/node/.npm-global/bin
+
+RUN mkdir -p /code
+RUN npm i -g npm
+WORKDIR /code
+
+RUN npm -g config set user root
+RUN npm install -g @hyperspace/cli
+
+CMD ["hyp", "daemon", "start"]
+ENTRYPOINT "/bin/bash"

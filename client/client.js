@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-let socketClient = io("http://host.docker.internal:8000"); 
+let socketClient = io("http://10.0.54.132:8000"); 
 // For docker container locally: http://host.docker.internal:8000 
 // For AWS EC2 instance: ws://ec2-16-170-254-219.eu-north-1.compute.amazonaws.com:8000
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
