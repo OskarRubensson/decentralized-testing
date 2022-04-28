@@ -1,10 +1,10 @@
 const io = require("socket.io-client");
-let socketClient = io("http://localhost:8000");
+let socketClient = io("ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000");
 
 var Docker = require("dockerode");
 var docker = new Docker();
 // For docker container locally: http://host.docker.internal:8000 
-// For AWS EC2 instance: ws://ec2-16-170-254-219.eu-north-1.compute.amazonaws.com:8000
+// For AWS EC2 instance: ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
 let containers = [];
 const maxContainers = 5;
@@ -72,7 +72,7 @@ async function initProtocolSeeder(protocol, config) {
       for (let i = 0; i < desiredPins; i++) {
         let container = containers[i];
         let cmd = `${seedCmd} ${key}`;
-        runExec(container, cmd);
+        runExec(container, cmd)
       }
     }
   }, 10000)
@@ -114,18 +114,18 @@ function runExec(container, cmd) {
   };
 
   container.exec(options, function (err, exec) {
-    if (err) return;
+    if (err) return false;
     exec.start(function (err, stream) {
       if (err) {
         console.log("error : " + err);
-        return;
+        return false;
       }
 
       container.modem.demuxStream(stream, process.stdout, process.stderr);
       exec.inspect(function (err, data) {
         if (err) {
           console.log("error : " + err);
-          return;
+          return false;
         }
       });
     });

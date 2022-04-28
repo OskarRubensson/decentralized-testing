@@ -10,7 +10,7 @@ sudo service docker start
 sudo docker pull ipfs/go-ipfs
 
 # pull hypercore-image
-sudo docker pull toastaren/hypercore:latest
+sudo docker pull toastaren/hypercore-cli:latest
 
 # Install Node, NVM, and NPM
 yum -y update
@@ -30,5 +30,5 @@ sudo yum -y install git
 cd /home/ec2-user/
 git clone https://github.com/OskarRubensson/decentralized-testing.git
 cd decentralized-testing
-npm install
+# npm install
 # npm run seeder
