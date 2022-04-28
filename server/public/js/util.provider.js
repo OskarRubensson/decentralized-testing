@@ -12,13 +12,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
         ipfsData = transformData('ipfs', ipfsData);
         hyperData = transformData('hyper', hyperData);
-        console.log(ipfsData, hyperData);
 
         var data = new Object();
-        data.ipfs = ipfsData;
-        data.hyper = hyperData;
+        if(ipfsData) data.ipfs = ipfsData;
+        if(hyperData) data.hyper = hyperData;
         console.log(data);
 
+        if(Object.keys(data).length == 0) return;
         socket.emit('seeder config', data);
     });
 });
@@ -54,11 +54,15 @@ function addFieldToForm(id) {
 function transformData(id, data) {
     const tmpData = {};
     const array = Object.entries(data);
+
         
     for(let i = 0; i <= array.length; i++) {
         if(i % 2 == 1) {
             const quantity = array[i][1];
             const hash = array[i - 1][1];
+
+            if(quantity == 0 || hash == "") return null;
+
             tmpData[hash] = Number.parseInt(quantity);
         }
     }
