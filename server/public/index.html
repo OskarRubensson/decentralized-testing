@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <script src="js/init.js"></script>
+    <script type="module" src="js/socket.handler.js"></script>
+    <script type="module" src="js/util.status.component.js"></script>
+
+    <script src="js/main.js"></script>
+    
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Dashboard</h1>
+        </header>
+        <div class="content">
+            <div class="main">
+                <div class="status-wrapper">
+                    <div class="status">
+                        <div class="status-text-wrapper">
+                            <h3>Number of instances</h3>
+                            <span id="status-text">0</span>
+                        </div>
+                        <div class="status-text-wrapper">
+                            <h3>Instances running tests</h3>
+                            <span id="status-text-running">0</span>
+                        </div>
+                    </div>
+                    <div class="status results-btn">
+                        <button id="clear-results-btn" class="btn btn-danger">Clear all results</button>
+                        <button id="clear-local-results-btn" class="btn btn-danger">Clear local results</button>
+                        <button id="providers-btn" class="btn btn-primary" onclick="navigate('', 'provider.html')">Providers</button>
+                    </div>
+                </div>
+                <div class="controllers">
+                    <h3>IPFS</h3>
+                    <form id="ipfs-form">
+                        <label for="protocol">Protocol: </label>
+                        <select name="protocol" required>
+                            <option value="">Select</option>
+                            <option value="hyper">hyper</option>
+                            <option value="ipfs" selected>ipfs</option>
+                            <option value="http">http</option>
+                        </select>
+                        <input type="text" name="url" placeholder="url" required>
+                        <label for="name">Page name: </label>
+                        <select name="name" required>
+                            <option value="">Select</option>
+                            <option value="mainpage">mainpage</option>
+                            <option value="pics">pics</option>
+                            <option value="videos">videos</option>
+                        </select>
+                        <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
+
+                        <input type="submit" value="Start test">
+                        <input type="button" value="See result" onclick="navigate('ipfs', 'result.html')">
+                    </form>
+                </div>
+                <div class="controllers">
+                    <h3>Hyper</h3>
+                    <form id="hyper-form">
+                        <label for="protocol">Protocol: </label>
+                        <select name="protocol" required>
+                            <option value="">Select</option>
+                            <option value="hyper" selected>hyper</option>
+                            <option value="ipfs">ipfs</option>
+                            <option value="http">http</option>
+                        </select>
+                        <input type="text" name="url" placeholder="url" required>
+                        <label for="name">Page name: </label>
+                        <select name="name" required>
+                            <option value="">Select</option>
+                            <option value="mainpage">mainpage</option>
+                            <option value="pics">pics</option>
+                            <option value="videos">videos</option>
+                        </select>
+                        <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
+
+                        <input type="submit" value="Start test">
+                        <input type="button" value="See result" onclick="navigate('hyper', 'result.html')">
+                    </form>
+                </div>
+                <div class="controllers">
+                    <h3>HTTP</h3>
+                    <form id="http-form">
+                        <label for="protocol">Protocol: </label>
+                        <select name="protocol" required>
+                            <option value="">Select</option>
+                            <option value="hyper">hyper</option>
+                            <option value="ipfs">ipfs</option>
+                            <option value="http" selected>http</option>
+                        </select>
+                        <input type="text" name="url" placeholder="url" required>
+                        <label for="name">Page name: </label>
+                        <select name="name" required>
+                            <option value="">Select</option>
+                            <option value="mainpage">mainpage</option>
+                            <option value="pics">pics</option>
+                            <option value="videos">videos</option>
+                        </select>
+                        <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
+
+                        <input type="submit" value="Start test">
+                        <input type="button" value="See result" onclick="navigate('http', 'result.html')">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
