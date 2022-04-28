@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Provider</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/util.provider.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>Dashboard » provider</h1>
+        </header>
+        <div class="content">
+            <div class="status-wrapper">
+                <div class="status">
+                    <button id="send-data-btn" class="btn btn-danger">Send</button>
+                </div>
+            </div>
+            <div class="controllers">
+                <h3>IPFS</h3>
+                <form id="ipfs">
+                    <div class="controll-wrapper">
+                        <input type="text" name="hash" placeholder="hash">
+                        <input type="number" name="quantity" value="0" min="0">
+                    </div>
+                    <div class="btn-group">
+                        <input type="button" value="Add field" onclick="addFieldToForm('ipfs')">
+                    </div>
+                </form>
+            </div>
+            <div class="controllers">
+                <h3>Hyper</h3>
+                <form id="hyper">
+                    <div class="controll-wrapper">
+                        <input type="text" name="hash" placeholder="hash">
+                        <input type="number" name="quantity" value="0" min="0">
+                    </div>
+                    <div class="btn-group">
+                        <input type="button" value="Add field" onclick="addFieldToForm('hyper')">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
