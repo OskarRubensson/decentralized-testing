@@ -18,6 +18,6 @@ socketClient.on("run test", (config) => {
   socketClient.emit("starting test");
   console.log("Starting test with config: ", config)
   testSite(config.name, config.url).then(time => {
-    socketClient.emit("test complete", {...config, time});
+    socketClient.emit("test complete", {protocol: config.protocol, name: config.name, time});
   }).catch(() => socketClient.emit("test failed"));
 });
