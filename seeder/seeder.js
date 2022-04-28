@@ -1,12 +1,12 @@
 const io = require("socket.io-client");
-let socketClient = io("ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000");
+let socketClient = io("http://localhost:8000")//io("ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000");
 
 var Docker = require("dockerode");
 var docker = new Docker();
 // For docker container locally: http://host.docker.internal:8000 
 // For AWS EC2 instance: ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
-let containers = [];
+
 const maxContainers = 5;
 
 socketClient.on("connect", () => {
@@ -37,18 +37,19 @@ socketClient.on("init seeders", async (config) => {
 });
 
 async function initProtocolSeeder(protocol, config) {
-  console.log(`Initializing ${protocol} seeders...`);
   if (protocol != "ipfs" && protocol != "hyper")
-    return false;
-
+  return false;
+  
+  let containers = [];
   let seedCmd = protocol === 'ipfs' ? 'ipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
-
+  
   // Find max amount of instances needed
   let amount = 0;
   for (let key in config) {
     amount = config[key] > amount ? amount = config[key] : amount;
   }
-
+  console.log(`Initializing ${amount} ${protocol}-seeders...`, seedCmd);
+  
   // Create amount-number of instances
   for (let i = 0; i < amount && i < maxContainers; i++) {
     await createContainer(protocol, i).then(container => {
@@ -56,11 +57,6 @@ async function initProtocolSeeder(protocol, config) {
       return container.start();
     })
   }
-
-  // Start all containers
-  //for (let container of containers) {
-    //console.log("hej");
-  //}
 
   // Give daemon time to start
   setTimeout(() => {
@@ -72,8 +68,17 @@ async function initProtocolSeeder(protocol, config) {
       for (let i = 0; i < desiredPins; i++) {
         let container = containers[i];
         let cmd = `${seedCmd} ${key}`;
-        runExec(container, cmd)
+        //runExec(container, cmd)
       }
+      const runContainers = containers.slice(0, desiredPins);
+      Promise.all(
+        runContainers.map(container => runExec(container, `${seedCmd} ${key}`))
+      ).then(() => {
+        console.log(`Seeding complete for ${protocol} - ${key}`)
+        socketClient.emit("seeders initialized");
+      }).catch(err => {
+        console.log(`Error occured while trying to seed ${protocol} - ${key}`);
+      })
     }
   }, 10000)
 }
@@ -106,28 +111,32 @@ function clearContainers() {
  * @param container
  */
 function runExec(container, cmd) {
-
-  var options = {
-    Cmd: ["sh", "-c", cmd],
-    AttachStdout: true,
-    AttachStderr: true
-  };
-
-  container.exec(options, function (err, exec) {
-    if (err) return false;
-    exec.start(function (err, stream) {
-      if (err) {
-        console.log("error : " + err);
-        return false;
-      }
-
-      container.modem.demuxStream(stream, process.stdout, process.stderr);
-      exec.inspect(function (err, data) {
+  return new Promise((resolve, reject) => {
+    console.log(container, cmd)
+    var options = {
+      Cmd: ["sh", "-c", cmd],
+      AttachStdout: true,
+      AttachStderr: true
+    };
+  
+    container.exec(options, function (err, exec) {
+      if (err) reject();
+      exec.start(function (err, stream) {
         if (err) {
           console.log("error : " + err);
-          return false;
+          reject();
         }
+  
+        container.modem.demuxStream(stream, process.stdout, process.stderr);
+        exec.inspect(function (err, data) {
+          if (err) {
+            console.log("error : " + err);
+            reject();
+          }
+          resolve();
+        });
       });
     });
-  });
+  })
+  
 }
