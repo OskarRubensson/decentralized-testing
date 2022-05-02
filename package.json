@@ -8,7 +8,8 @@
     "client": "nodemon client/client.js",
     "server": "nodemon server/server.js -i 'output.json'",
     "start": "node server/server.js",
-    "seeder": "node seeder/seeder.js"
+    "seeder": "node seeder/seeder.js",
+    "leecher": "node client/leecher.js"
   },
   "repository": {
     "type": "git",

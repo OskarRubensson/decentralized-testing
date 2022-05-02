@@ -20,8 +20,10 @@ const TESTROOM = 'tester';
 const CLIENTROOM = 'client';
 const RUNNINGTESTER = 'running testers';
 const SEEDERROOM = 'seeder';
+const LEECHERROOM = 'leecher';
 let runningTest = false;
 let initSeeders = true;
+let initLeechers = true;
 let testQueue = [];
 
 io.on('connection', (socket) => {
@@ -49,21 +51,34 @@ io.on('connection', (socket) => {
     socket.emit('test complete', times);
   });
 
+  socket.on('leecher connect', () => {
+    socket.join(LEECHERROOM);
+    console.log("User assigned as leecher", `Currently ${io.sockets.adapter.rooms.get(LEECHERROOM).size | 0} leechers`);
+  })
+
+  socket.on('leechers initialized', () => {
+    console.log('Leecher initialized');
+    initLeechers = false;
+    if (testQueue.length > 0) {
+      beginTest(testQueue.shift());
+    }
+  });
+
+  socket.on('leecher config', (config) => {
+    console.log('Leecher config received:', config);
+    initLeechers = true;
+    io.in(LEECHERROOM).emit('init leechers', config);
+  });
+
   socket.on("seeder connect", () => {
     socket.join(SEEDERROOM);
     console.log("User assigned as seeder", `Currently ${io.sockets.adapter.rooms.get(SEEDERROOM).size | 0} seeder`);
   })
 
-<<<<<<< HEAD
   socket.on("seeder config", (config) => {
     console.log("Seeder config received", config);
     initSeeders = true;
     io.in(SEEDERROOM).emit("init seeders", config);
-=======
-  socket.on('client count', async () => {
-    let clients = await io.in(TESTROOM).fetchSockets();
-    socket.emit('client count', clients.length);
->>>>>>> dd5ff74b236d2adc23cec45958b0d8cafb3f5a23
   })
 
   socket.on("seeders initialized", () => {
