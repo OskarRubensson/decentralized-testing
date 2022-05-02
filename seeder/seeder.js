@@ -7,7 +7,7 @@ var docker = new Docker();
 // For AWS EC2 instance: ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
 
-const maxContainers = 5;
+const maxContainers = 1000;
 let containers = [];
 
 socketClient.on("connect", () => {
@@ -41,7 +41,7 @@ socketClient.on("init seeders", async (config) => {
 async function initProtocolSeeder(protocol, config) {
   if (protocol != "ipfs" && protocol != "hyper")
   return false;
-  
+  let prot_containers = []
   let seedCmd = protocol === 'ipfs' ? 'ipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
   
   // Find max amount of instances needed
@@ -55,6 +55,7 @@ async function initProtocolSeeder(protocol, config) {
   for (let i = 0; i < amount && i < maxContainers; i++) {
     await createContainer(protocol, i).then(container => {
       containers.push(container);
+      prot_containers.push(container);
       return container.start();
     })
   }
@@ -66,7 +67,7 @@ async function initProtocolSeeder(protocol, config) {
     for (let key in config) {
       let desiredPins = config[key];
       
-      const runContainers = containers.slice(0, desiredPins);
+      const runContainers = prot_containers.slice(0, desiredPins);
       Promise.all(
         runContainers.map(container => runExec(container, `${seedCmd} ${key}`))
       ).then(() => {
