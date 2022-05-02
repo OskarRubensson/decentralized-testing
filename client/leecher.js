@@ -9,7 +9,8 @@ var docker = new Docker();
 
 const maxContainers = 5;
 const IMAGE_NAME = 'decentralizedtesting';
-const CONTAINER_NAME_PREFIX = 'dt-';
+const CONTAINER_NAME_PREFIX = 'dt';
+let containers = []
 
 socketClient.on("connect", () => {
   console.log("Connected to server");
@@ -23,16 +24,17 @@ socketClient.on("disconnect", () => {
 
 socketClient.on("init leechers", async (n) => {
   console.log('new config recieved... clearing all containers');
-  await clearContainers();
+  await clearContainers().then(() => containers = []);
 
   console.log(`Initializing ${n > maxContainers ? maxContainers : n} leechers...`);
-  
+
   // Create amount-number of instances
   for (let i = 0; i < n && i < maxContainers; i++) {
-    docker.createContainer({
+    await docker.createContainer({
       Image: IMAGE_NAME,
       name: `${CONTAINER_NAME_PREFIX}-${i}`
     }).then(container => {
+      containers.push(container);
       return container.start();
     })
   }
@@ -42,16 +44,7 @@ socketClient.on("init leechers", async (n) => {
 });
 
 function clearContainers() {
-  return new Promise(async (resolve, reject) => {
-    docker.listContainers({ all: true }, async (err, cons) => {
-      if (err)
-        reject();
-      else {
-        for (let containerInfo in cons) {
-          await docker.getContainer(containerInfo.Id).remove({ force: true });
-        }
-        resolve();
-      }
-    });
-  });
+  return Promise.allSettled(
+    containers.map(async container => await docker.getContainer(container.id).remove({ force: true }))
+  )
 }
