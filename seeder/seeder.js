@@ -8,6 +8,7 @@ var docker = new Docker();
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
 
 const maxContainers = 5;
+let containers = [];
 
 socketClient.on("connect", () => {
   console.log("Connected to server");
@@ -26,7 +27,8 @@ socketClient.on("disconnect", () => {
 
 socketClient.on("init seeders", async (config) => {
   console.log('new config recieved... clearing all containers');
-  await clearContainers();
+
+  await clearContainers().then(() => containers = []);
 
   for (let protocol in config) {
     await initProtocolSeeder(protocol, config[protocol])
@@ -40,7 +42,6 @@ async function initProtocolSeeder(protocol, config) {
   if (protocol != "ipfs" && protocol != "hyper")
   return false;
   
-  let containers = [];
   let seedCmd = protocol === 'ipfs' ? 'ipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
   
   // Find max amount of instances needed
@@ -65,11 +66,6 @@ async function initProtocolSeeder(protocol, config) {
     for (let key in config) {
       let desiredPins = config[key];
       
-      for (let i = 0; i < desiredPins; i++) {
-        let container = containers[i];
-        let cmd = `${seedCmd} ${key}`;
-        //runExec(container, cmd)
-      }
       const runContainers = containers.slice(0, desiredPins);
       Promise.all(
         runContainers.map(container => runExec(container, `${seedCmd} ${key}`))
@@ -87,23 +83,29 @@ function createContainer(protocol, index) {
   let image = protocol == "ipfs" ? "ipfs/go-ipfs" : "toastaren/hypercore-cli:latest";
   return docker.createContainer({
     Image: image,
-    name: `${protocol}-${index}`
+    name: `${protocol}-${Date.now()}-${index}`
   });
 }
 
 function clearContainers() {
-  return new Promise(async (resolve, reject) => {
-    docker.listContainers({ all: true }, async (err, cons) => {
-      if (err)
-        reject();
-      else {
-        for (let containerInfo in cons) {
-          await docker.getContainer(containerInfo.Id).remove({ force: true });
-        }
-        resolve();
-      }
-    });
-  });
+  // return new Promise(async (resolve, reject) => {
+  //   docker.listContainers({ all: true }, async (err, cons) => {
+  //     if (err)
+  //       reject();
+  //     else {
+  //       console.log(cons);
+  //       for (let containerInfo in cons) {
+  //         console.log(containerInfo, containerInfo.Id);
+  //         await docker.getContainer(containerInfo.Id).remove({ force: true });
+  //       }
+  //       resolve();
+  //     }
+  //   });
+    
+  // });
+  return Promise.allSettled(
+    containers.map(async container => await docker.getContainer(container.id).remove({ force: true }))
+  )
 }
 
 /**
@@ -112,7 +114,7 @@ function clearContainers() {
  */
 function runExec(container, cmd) {
   return new Promise((resolve, reject) => {
-    console.log(container, cmd)
+    //console.log(container, cmd)
     var options = {
       Cmd: ["sh", "-c", cmd],
       AttachStdout: true,
