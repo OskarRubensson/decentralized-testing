@@ -32,7 +32,10 @@ socketClient.on("init leechers", async (n) => {
   for (let i = 0; i < n && i < maxContainers; i++) {
     await docker.createContainer({
       Image: IMAGE_NAME,
-      name: `${CONTAINER_NAME_PREFIX}-${i}`
+      name: `${CONTAINER_NAME_PREFIX}-${i}`,
+      HostConfig: {
+        ExtraHosts: ["host.docker.internal:host-gateway"]
+      }
     }).then(container => {
       containers.push(container);
       return container.start();
