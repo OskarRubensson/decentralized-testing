@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-let socketClient = io("ws://ec2-16-170-211-57.eu-north-1.compute.amazonaws.com:8000")//io("ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000");
+let socketClient = io("ws://ec2-16-170-252-88.eu-north-1.compute.amazonaws.com:8000")//io("ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000");
 
 var Docker = require("dockerode");
 var docker = new Docker();
