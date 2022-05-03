@@ -7,7 +7,7 @@ var docker = new Docker();
 // For AWS EC2 instance: ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
 
-const maxContainers = 5;
+const maxContainers = 1000;
 const IMAGE_NAME = 'decentralizedtesting';
 const CONTAINER_NAME_PREFIX = 'dt';
 let containers = []
