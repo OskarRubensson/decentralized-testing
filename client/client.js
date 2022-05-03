@@ -19,5 +19,9 @@ socketClient.on("run test", (config) => {
   console.log("Starting test with config: ", config)
   testSite(config.name, config.url).then(time => {
     socketClient.emit("test complete", {protocol: config.protocol, name: config.name, time});
-  }).catch(() => socketClient.emit("test failed"));
+  }).catch(err => {
+    console.log("Test failed:", err)
+    socketClient.emit("test failed")
+  
+  });
 });

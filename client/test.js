@@ -12,16 +12,16 @@ return new Promise( async (resolve, reject) => {
         .setChromeOptions(new chrome.Options().addArguments(['headless', '--no-sandbox', '--disable-dev-shm-usage']))
         .build();
 
-    await driver.get(url).catch(() => reject());
+    await driver.get(url).catch(err => reject(err));
     
     driver.sleep(5000).then(() => {
       driver.wait(() => driver.executeScript('return document.readyState').then((readyState) => readyState === 'complete' )).then(() => {
         driver.executeScript("return window.performance.timing.loadEventStart - window.performance.timing.navigationStart;").then(async (time) => {
           console.log(`${name} took ${time}ms to load`);
-          await driver.quit();
+          await driver.quit().catch(err => reject(err));
           resolve(time);
         });
-      }).catch(() => reject());
+      }).catch(err => reject(err));
     })
   });
 }
