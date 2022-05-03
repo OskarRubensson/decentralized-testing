@@ -30,7 +30,7 @@ socketClient.on("init leechers", async (n) => {
 
   // Create amount-number of instances
   for (let i = 0; i < n && i < maxContainers; i++) {
-    await docker.createContainer({
+    docker.createContainer({
       Image: IMAGE_NAME,
       name: `${CONTAINER_NAME_PREFIX}-${i}`,
       HostConfig: {
@@ -48,6 +48,6 @@ socketClient.on("init leechers", async (n) => {
 
 function clearContainers() {
   return Promise.allSettled(
-    containers.map(async container => await docker.getContainer(container.id).remove({ force: true }))
+    containers.map(container => docker.getContainer(container.id).remove({ force: true }))
   )
 }
