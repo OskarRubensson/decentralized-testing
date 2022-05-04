@@ -36,7 +36,6 @@ function promiseTimeout(ms) {
   // Create a promise that rejects in <ms> milliseconds
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      clearTimeout(id);
       resolve();
     }, ms);
   });
