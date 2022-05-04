@@ -55,32 +55,39 @@ async function initProtocolSeeder(protocol, config) {
   console.log(`Initializing ${amount} ${protocol}-seeders...`, seedCmd);
   
   // Create amount-number of instances
+  let promises = [];
   for (let i = 0; i < amount && i < maxContainers; i++) {
-    await createContainer(protocol, i).then(container => {
+    promises.push(createContainer(protocol, i).then(container => {
       containers.push(container);
       prot_containers.push(container);
       return container.start();
-    })
+    }));
   }
 
-  // Give daemon time to start
-  setTimeout(() => {
+  Promise.all(promises).then(results => {
+    // Give daemon time to start
+    setTimeout(() => {
 
-    // Pin hash according to the config
-    for (let key in config) {
-      let desiredPins = config[key];
-      
-      const runContainers = prot_containers.slice(0, desiredPins);
-      Promise.all(
-        runContainers.map(container => runExec(container, `${seedCmd} ${key}`))
-      ).then(() => {
-        console.log(`Seeding complete for ${protocol} - ${key}`)
-        socketClient.emit("seeders initialized");
-      }).catch(err => {
-        console.log(`Error occured while trying to seed ${protocol} - ${key}`);
-      })
-    }
-  }, 10000)
+      // Pin hash according to the config
+      for (let key in config) {
+        let desiredPins = config[key];
+        
+        const runContainers = prot_containers.slice(0, desiredPins);
+        Promise.allSettled(
+          runContainers.map(container => runExec(container, `${seedCmd} ${key}`))
+        ).then(() => {
+          console.log(`Seeding complete for ${protocol} - ${key}`)
+          socketClient.emit("seeders initialized");
+        }).catch(err => {
+          console.log(`Error occured while trying to seed ${protocol} - ${key}`);
+        })
+      }
+    }, 7000)
+  }).catch(err => {
+    console.log("Error occured while trying to start containers");
+  })
+
+  
 }
 
 function createContainer(protocol, index) {
@@ -132,7 +139,10 @@ function runExec(container, cmd) {
     };
   
     container.exec(options, function (err, exec) {
-      if (err) reject();
+      if (err) {
+        console.log("error:", err);
+        reject();
+      }
       exec.start(function (err, stream) {
         if (err) {
           console.log("error : " + err);
