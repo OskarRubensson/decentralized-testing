@@ -49,6 +49,9 @@ async function initProtocolSeeder(protocol, config) {
   for (let key in config) {
     amount = config[key] > amount ? amount = config[key] : amount;
   }
+
+  if (amount <= 0)
+    return;
   console.log(`Initializing ${amount} ${protocol}-seeders...`, seedCmd);
   
   // Create amount-number of instances
@@ -84,29 +87,35 @@ function createContainer(protocol, index) {
   let image = protocol == "ipfs" ? "ipfs/go-ipfs" : "toastaren/hypercore-cli:latest";
   return docker.createContainer({
     Image: image,
-    name: `${protocol}-${Date.now()}-${index}`
+    name: `${protocol}-${index}`
   });
 }
 
 function clearContainers() {
-  // return new Promise(async (resolve, reject) => {
-  //   docker.listContainers({ all: true }, async (err, cons) => {
-  //     if (err)
-  //       reject();
-  //     else {
-  //       console.log(cons);
-  //       for (let containerInfo in cons) {
-  //         console.log(containerInfo, containerInfo.Id);
-  //         await docker.getContainer(containerInfo.Id).remove({ force: true });
-  //       }
-  //       resolve();
-  //     }
-  //   });
+  console.log(containers);
+  /*return new Promise(async (resolve, reject) => {
+    docker.listContainers({ all: true }, async (err, cons) => {
+      if (err)
+        reject();
+      else {
+        Promise.allSettled(
+          cons.map(containerInfo =>
+            docker.getContainer(containerInfo.Id).remove({ force: true })
+          )
+        ).then(() => {
+          resolve();
+        })
+      }
+    });
     
-  // });
-  return Promise.allSettled(
-    containers.map(async container => await docker.getContainer(container.id).remove({ force: true }))
-  )
+  });*/
+  return new Promise((resolve, reject) => {
+    Promise.allSettled(
+      containers.map(container => docker.getContainer(container.id).remove({ force: true }))
+    ).then(() => resolve())
+    .catch(() => reject());
+  
+  })
 }
 
 /**
