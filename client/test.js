@@ -1,8 +1,10 @@
 const webdriver = require('selenium-webdriver'),
     By = webdriver.By,
     until = webdriver.until,
-    logging = webdriver.logging;
-const chrome = require('selenium-webdriver/chrome');
+    logging = webdriver.logging,
+    pm = webdriver.promise;
+pm.USE_PROMISE_MANAGER = false;
+const chrome = require('selenium-webdriver/firefox');
 const config = require('../config.json');
 
 function testSite(name, url){
@@ -13,7 +15,7 @@ function testSite(name, url){
     });
     console.log("Starting to build webdriver");
     const driver = await new webdriver.Builder()
-        .forBrowser('chrome')
+        .forBrowser('firefox')
         .setChromeOptions(new chrome.Options().addArguments(['headless', '--no-sandbox', '--disable-dev-shm-usage']))
         .build();
 
