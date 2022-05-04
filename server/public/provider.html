@@ -13,12 +13,20 @@
 <body>
     <div class="wrapper">
         <header>
-            <h1>Dashboard » provider</h1>
+            <h1>Dashboard » provider & leechers</h1>
         </header>
         <div class="content">
             <div class="status-wrapper">
                 <div class="status">
                     <button id="send-data-btn" class="btn btn-danger">Send</button>
+                </div>
+                <div class="status">
+                    <form id="leechers">
+                        <label for="amount">Amount of leechers</label>
+                        <input type="number" name="amount" id="amount" placeholder="amount" value="0">
+                        <!-- <button id="send-leechers-btn" class="btn btn-danger">Send</button> -->
+                        <input type="submit" class="btn btn-danger" value="Send">
+                    </form>
                 </div>
             </div>
             <div class="controllers">

@@ -21,6 +21,17 @@ window.addEventListener('DOMContentLoaded', () => {
         if(Object.keys(data).length == 0) return;
         socket.emit('seeder config', data);
     });
+
+    document.getElementById('leechers').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const form = document.getElementById('leechers');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        data.amount = Number.parseInt(data.amount);
+
+        console.log(data);
+        socket.emit('leecher config', data.amount);
+    });
 });
 /**
  * Function for adding fields to a specific form

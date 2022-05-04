@@ -67,3 +67,11 @@ function navigate(key) {
 function setResultToShow(key) {
     setLocalStorage('showResult', key);
 }
+/**
+ * Function for setting disabled property of a button
+ * @param {string} id - id of the button
+ * @param {boolean} value - value of the disabled property
+ */
+function setBtnDisabled(id, value) {
+    document.getElementById(id).disabled = value;
+}

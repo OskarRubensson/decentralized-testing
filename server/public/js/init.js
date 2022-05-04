@@ -1,1 +1,1 @@
-var socket = io("http://10.0.54.132:8000");
+var socket = io("ws://ec2-16-170-252-88.eu-north-1.compute.amazonaws.com:8000");
