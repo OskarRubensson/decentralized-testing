@@ -11,6 +11,7 @@ function testSite(name, url){
       if (timedOut)
         testSite(name, url).then(res => resolve(res)).catch(err => reject(err))
     });
+    console.log("Starting to build webdriver");
     const driver = await new webdriver.Builder()
         .forBrowser('chrome')
         .setChromeOptions(new chrome.Options().addArguments(['headless', '--no-sandbox', '--disable-dev-shm-usage']))
@@ -36,6 +37,7 @@ function promiseTimeout(ms) {
   // Create a promise that rejects in <ms> milliseconds
   return new Promise((resolve, reject) => {
     setTimeout(() => {
+      console.log("Timed out, trying again")
       resolve();
     }, ms);
   });
