@@ -1,4 +1,5 @@
 const io = require("socket.io-client");
+require("dotenv").config({ path: __dirname + "/../.env" });
 let socketClient = io(process.env.SERVER_IP || "http://localhost:8000");
 
 var Docker = require("dockerode");
