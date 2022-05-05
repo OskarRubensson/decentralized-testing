@@ -41,10 +41,10 @@ socketClient.on("init seeders", async (config) => {
 
 async function initProtocolSeeder(protocol, config) {
   if (protocol != "ipfs" && protocol != "hyper")
-  return false;
+    return false;
   let prot_containers = []
   let seedCmd = protocol === 'ipfs' ? 'ipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
-  
+
   // Find max amount of instances needed
   let amount = 0;
   for (let key in config) {
@@ -97,7 +97,7 @@ function createContainer(protocol, index) {
     Image: image,
     name: `${protocol}-${index}`,
     HostConfig: {
-      Memory: "512m"
+      Memory: 512 * 1024 * 1024
     }
   });
 }
