@@ -1,4 +1,5 @@
 const io = require("socket.io-client");
+require("dotenv").config({ path: __dirname + "/../.env" });
 let socketClient = io(process.env.SERVER_IP || "http://localhost:8000"); 
 // For docker container locally: http://host.docker.internal:8000 
 // For AWS EC2 instance: ws://ec2-16-170-211-57.eu-north-1.compute.amazonaws.com:8000

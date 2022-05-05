@@ -10,8 +10,10 @@ const config = require('../config.json');
 function testSite(name, url){
   return new Promise( async (resolve, reject) => {
     promiseTimeout(10000).then(() => {
-      if (timedOut)
+      if (timedOut){
+        console.log("Timed out, trying again")
         testSite(name, url).then(res => resolve(res)).catch(err => reject(err))
+      }
     });
     console.log("Starting to build webdriver");
     const driver = await new webdriver.Builder()
@@ -39,7 +41,6 @@ function promiseTimeout(ms) {
   // Create a promise that rejects in <ms> milliseconds
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log("Timed out, trying again")
       resolve();
     }, ms);
   });
