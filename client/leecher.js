@@ -1,5 +1,5 @@
 const io = require("socket.io-client");
-let socketClient = io("ws://ec2-16-170-252-88.eu-north-1.compute.amazonaws.com:8000")//io("ws://ec2-13-48-57-141.eu-north-1.compute.amazonaws.com:8000");
+let socketClient = io(process.env.SERVER_IP || "http://localhost:8000");
 
 var Docker = require("dockerode");
 var docker = new Docker();
@@ -8,7 +8,7 @@ var docker = new Docker();
 // For Heroku: wss://decentralized-testing-server.herokuapp.com/
 
 const maxContainers = 1000;
-const IMAGE_NAME = 'decentralizedtesting';
+const IMAGE_NAME = 'toastaren/decentralizedtesting';
 const CONTAINER_NAME_PREFIX = 'dt';
 let containers = []
 
@@ -34,7 +34,9 @@ socketClient.on("init leechers", async (n) => {
       Image: IMAGE_NAME,
       name: `${CONTAINER_NAME_PREFIX}-${i}`,
       HostConfig: {
-        ExtraHosts: ["host.docker.internal:host-gateway"]
+        ExtraHosts: ["host.docker.internal:host-gateway"],
+        Ulimits: [{ Name: "nofile", Soft: 65536, Hard: 65536 }],
+        Privileged: true
       }
     }).then(container => {
       containers.push(container);
