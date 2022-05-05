@@ -1,11 +1,10 @@
 FROM node:14-alpine
 
 USER root
-
-RUN apk update && apk add nodejs && \
+ENV NODE_ENV=production
+RUN apk update && \
   apk add chromium && \
-  apk add chromium-chromedriver && \
-  apk add --update git
+  apk add chromium-chromedriver
 
 RUN mkdir data && mkdir data/decentralized-testing
 ADD ./ /data/decentralized-testing
@@ -17,6 +16,6 @@ ENV PATH=$PATH:/home/root/.npm-global/bin
 
 RUN apk --no-cache add --virtual python
 RUN npm config set python /usr/bin/python
-RUN npm install
+RUN npm install --production
 
 CMD ["npm", "run", "client"]
