@@ -83,7 +83,7 @@ async function initProtocolSeeder(protocol, config) {
           console.log(`Error occured while trying to seed ${protocol} - ${key}`);
         })
       }
-    }, (protocol != "ipfs" ? 7000 : 20000))
+    }, 7000 )
   }).catch(err => {
     console.log("Error occured while trying to start containers", err);
   })
@@ -92,7 +92,7 @@ async function initProtocolSeeder(protocol, config) {
 }
 
 function createContainer(protocol, index) {
-  let image = protocol == "ipfs" ? "ipfs/go-ipfs:master-2022-04-08-52bf133" : "toastaren/hypercore-cli:latest";
+  let image = protocol == "ipfs" ? "ipfs/go-ipfs:latest" : "toastaren/hypercore-cli:latest";
   return docker.createContainer({
     Image: image,
     name: `${protocol}-${index}`,
