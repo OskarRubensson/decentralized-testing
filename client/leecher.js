@@ -35,9 +35,7 @@ socketClient.on("init leechers", async (n) => {
       Image: IMAGE_NAME,
       name: `${CONTAINER_NAME_PREFIX}-${i}`,
       HostConfig: {
-        ExtraHosts: ["host.docker.internal:host-gateway"],
-        Ulimits: [{ Name: "nofile", Soft: 65536, Hard: 65536 }],
-        Privileged: true
+        ExtraHosts: ["host.docker.internal:host-gateway"]
       }
     }).then(container => {
       containers.push(container);
