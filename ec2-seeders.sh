@@ -2,18 +2,23 @@
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 ################ This is the script that is run when the EC2-instances are launched ################
 
-# install most recent docker version
-sudo amazon-linux-extras install docker -y
+sudo yum update -y
+sudo yum install docker -y
 sudo service docker start
+sudo usermod -a -G docker ec2-user
+
+# install most recent docker version
+# sudo amazon-linux-extras install docker -y
+# sudo service docker start
 
 # pull ipfs-image
-sudo docker pull ipfs/go-ipfs
+# sudo docker pull ipfs/go-ipfs
 
 # pull hypercore-image
-sudo docker pull toastaren/hypercore-cli:latest
+# sudo docker pull toastaren/hypercore-cli:latest
 
 # Install Node, NVM, and NPM
-yum -y update
+# yum -y update
 
 # START
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
@@ -30,5 +35,5 @@ sudo yum -y install git
 cd /home/ec2-user/
 git clone https://github.com/OskarRubensson/decentralized-testing.git
 cd decentralized-testing
-# npm install
+npm install
 # npm run seeder

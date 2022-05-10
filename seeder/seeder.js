@@ -85,7 +85,7 @@ async function initProtocolSeeder(protocol, config) {
       }
     }, 7000)
   }).catch(err => {
-    console.log("Error occured while trying to start containers");
+    console.log("Error occured while trying to start containers", err);
   })
 
   
