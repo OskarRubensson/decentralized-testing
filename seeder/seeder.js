@@ -53,7 +53,7 @@ async function initProtocolSeeder(protocol, config) {
 
   if (amount <= 0)
     return;
-  console.log(`Initializing ${amount} ${protocol}-seeders...`, seedCmd);
+  console.log(`Initializing ${amount} ${protocol}-seeders...`);
   
   // Create amount-number of instances
   let promises = [];
@@ -62,10 +62,10 @@ async function initProtocolSeeder(protocol, config) {
       containers.push(container);
       prot_containers.push(container);
       return container.start();
-    }));
+    }).catch(err => { console.log("Couldn't start container", err)}));
   }
 
-  Promise.all(promises).then(results => {
+  Promise.allSettled(promises).then(results => {
     // Give daemon time to start
     setTimeout(() => {
 
@@ -103,7 +103,7 @@ function createContainer(protocol, index) {
 }
 
 function clearContainers() {
-  console.log(containers);
+  // console.log(containers);
   /*return new Promise(async (resolve, reject) => {
     docker.listContainers({ all: true }, async (err, cons) => {
       if (err)
