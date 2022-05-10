@@ -141,28 +141,31 @@ function runExec(container, cmd) {
       AttachStdout: true,
       AttachStderr: true
     };
-  
-    container.exec(options, function (err, exec) {
-      if (err) {
-        console.log("error:", err);
-        reject();
-      }
-      exec.start(function (err, stream) {
+    try{
+      container.exec(options, function (err, exec) {
         if (err) {
-          console.log("error : " + err);
+          console.log("error:", err);
           reject();
         }
-  
-        container.modem.demuxStream(stream, process.stdout, process.stderr);
-        exec.inspect(function (err, data) {
+        exec.start(function (err, stream) {
           if (err) {
             console.log("error : " + err);
             reject();
           }
-          resolve();
+    
+          container.modem.demuxStream(stream, process.stdout, process.stderr);
+          exec.inspect(function (err, data) {
+            if (err) {
+              console.log("error : " + err);
+              reject();
+            }
+            resolve();
+          });
         });
       });
-    });
+    } catch (err) {
+      reject();
+    }
   })
   
 }
