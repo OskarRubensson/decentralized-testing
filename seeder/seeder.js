@@ -97,7 +97,7 @@ function createContainer(protocol, index) {
     Image: image,
     name: `${protocol}-${index}`,
     HostConfig: {
-      Memory: 512 * 1024 * 1024
+      Memory: 1024 * 1024 * 1024
     }
   });
 }

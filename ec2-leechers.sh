@@ -23,6 +23,14 @@ wget https://dist.ipfs.io/go-ipfs/v0.12.2/go-ipfs_v0.12.2_linux-amd64.tar.gz
 tar -xvzf go-ipfs_v0.12.2_linux-amd64.tar.gz
 cd go-ipfs
 sudo bash install.sh
+
+cd ../
+ipfs init
+cd .ipfs
+# Change config so that API and Gateway address is 0.0.0.0 instead of 127.0.0.1. So that containers can access it.
+# nano config
+
+
 cd ../
 git clone https://github.com/OskarRubensson/decentralized-testing.git
 cd decentralized-testing
@@ -42,3 +50,5 @@ sudo usermod -a -G docker ec2-user
 # start tester daemon
 # sudo docker build . -f="Dockerfile-leechers" -t="selenium"
 # sudo docker run --name selenium-chrome --network="host" --shm-size=5g selenium
+
+docker rm --force $(docker ps -q --all)
