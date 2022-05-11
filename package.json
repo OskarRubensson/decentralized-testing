@@ -8,7 +8,9 @@
     "client": "nodemon client/client.js",
     "server": "nodemon server/server.js -i 'output.json'",
     "start": "node server/server.js",
-    "seeder": "node seeder/seeder.js"
+    "seeder": "node seeder/seeder.js",
+    "dashboard": "node server/dashboard.js",
+    "dev:dashboard": "nodemon server/dashboard.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,7 @@
     "selenium-webdriver": "^4.1.1"
   },
   "dependencies": {
-    "express": "^4.17.3",
+    "express": "^4.18.1",
     "http": "^0.0.1-security",
     "hypercore-fetch": "^8.5.0",
     "nodemon": "^2.0.15",

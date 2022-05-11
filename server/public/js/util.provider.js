@@ -1,5 +1,4 @@
 
-var inputIndex = 0;
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('send-data-btn').addEventListener('click', (e) => {
         const formIPFS = document.getElementById('ipfs');
@@ -18,7 +17,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if(hyperData) data.hyper = hyperData;
         console.log(data);
 
-        if(Object.keys(data).length == 0) return;
         socket.emit('seeder config', data);
     });
 
@@ -37,6 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
  * Function for adding fields to a specific form
  * @param {string} id - id of the form that the field should be added to
  */
+var inputIndex = 0;
 function addFieldToForm(id) {
     var form = document.getElementById(id);
 
