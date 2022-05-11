@@ -83,7 +83,7 @@ async function initProtocolSeeder(protocol, config) {
           console.log(`Error occured while trying to seed ${protocol} - ${key}`);
         })
       }
-    }, 10000 )
+    }, 60000 )
   }).catch(err => {
     console.log("Error occured while trying to start containers", err);
   })
@@ -97,7 +97,7 @@ function createContainer(protocol, index) {
     Image: image,
     name: `${protocol}-${index}`,
     HostConfig: {
-      Memory: 1024 * 1024 * 1024
+      Memory: 512 * 1024 * 1024
     }
   });
 }
