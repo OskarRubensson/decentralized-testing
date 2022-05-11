@@ -95,7 +95,7 @@ function createContainer(protocol, index) {
   let image = protocol == "ipfs" ? "ipfs/go-ipfs:latest" : "toastaren/hypercore-cli:latest";
   return docker.createContainer({
     Image: image,
-    name: `${protocol}-${index}`,
+    name: `${protocol}-${index}-1`,
     HostConfig: {
       Memory: 512 * 1024 * 1024
     }
