@@ -74,21 +74,24 @@ async function initProtocolSeeder(protocol, config) {
         let desiredPins = config[key];
         
         const runContainers = prot_containers.slice(0, desiredPins);
-        Promise.allSettled(
+        /*Promise.allSettled(
           runContainers.map(container => runExec(container, `${seedCmd} ${key}`))
         ).then(() => {
           console.log(`Seeding complete for ${protocol} - ${key}`)
           socketClient.emit("seeders initialized");
         }).catch(err => {
           console.log(`Error occured while trying to seed ${protocol} - ${key}`);
-        })
+        })*/
+        runContainers.forEach(async container => {
+          await runExec(container, `${seedCmd} ${key}`).catch(err => console.log(`Error occured while trying to seed ${protocol} - ${key}`));
+        });
+        console.log(`Seeding complete for ${protocol} - ${key}`)
+        socketClient.emit("seeders initialized");
       }
     }, 20000 )
   }).catch(err => {
     console.log("Error occured while trying to start containers", err);
   })
-
-  
 }
 
 function createContainer(protocol, index) {
@@ -97,8 +100,8 @@ function createContainer(protocol, index) {
     Image: image,
     name: `${protocol}-${index}-1`,
     HostConfig: {
-      Memory: 512 * 1024 * 1024,
-      MemorySwap: 512 * 1024 * 1024,
+      Memory: 300 * 1024 * 1024,
+      MemorySwap: 1024 * 1024 * 1024,
     }
   });
 }
