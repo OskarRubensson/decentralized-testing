@@ -95,7 +95,7 @@ async function initProtocolSeeder(protocol, config) {
 }
 
 function createContainer(protocol, index) {
-  let image = protocol == "ipfs" ? "ipfs/go-ipfs:latest" : "toastaren/hypercore-cli:latest";
+  let image = protocol == "ipfs" ? "toastaren/goipfs:latest" : "toastaren/hypercore-cli:latest";
   return docker.createContainer({
     Image: image,
     name: `${protocol}-${index}-1`,
