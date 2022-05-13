@@ -88,7 +88,7 @@ async function initProtocolSeeder(protocol, config) {
         console.log(`Seeding complete for ${protocol} - ${key}`)
         socketClient.emit("seeders initialized");
       }
-    }, 20000 )
+    }, 40000 )
   }).catch(err => {
     console.log("Error occured while trying to start containers", err);
   })
