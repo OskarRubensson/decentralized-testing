@@ -43,7 +43,7 @@ async function initProtocolSeeder(protocol, config) {
   if (protocol != "ipfs" && protocol != "hyper")
     return false;
   let prot_containers = []
-  let seedCmd = protocol === 'ipfs' ? 'jsipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
+  let seedCmd = protocol === 'ipfs' ? 'ipfs pin add' : '/usr/local/bin/node /cli/bin/hyp seed';
 
   // Find max amount of instances needed
   let amount = 0;
