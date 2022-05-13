@@ -48,14 +48,15 @@
                             <option value="ipfs" selected>ipfs</option>
                             <option value="http">http</option>
                         </select>
-                        <input type="text" name="url" placeholder="url" required>
+                        <label for="url">Site URL: </label>
+                        <input type="text" name="url" placeholder="URL" required>
                         <label for="name">Test name: </label>
                         <input type="text" name="name">
-                        <label for="amount">Amount of testers:</label>
+                        <label for="amount">Amount of testers (0 indicates all):</label>
                         <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
 
-                        <input type="submit" value="Start test">
-                        <input type="button" value="See result" onclick="navigate('ipfs', 'result.html')">
+                        <input type="submit" value="Start test" class="btn btn-primary">
+                        <input type="button" value="See result" class="btn btn-primary" onclick="navigate('ipfs', 'result.html')">
                     </form>
                 </div>
                 <div class="controllers">
@@ -68,34 +69,36 @@
                             <option value="ipfs">ipfs</option>
                             <option value="http">http</option>
                         </select>
-                        <input type="text" name="url" placeholder="url" required>
+                        <label for="url">Site URL: </label>
+                        <input type="text" name="url" placeholder="URL" required>
                         <label for="name">Test name: </label>
                         <input type="text" name="name">
-                        <label for="amount">Amount of testers:</label>
+                        <label for="amount">Amount of testers (0 indicates all):</label>
                         <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
 
-                        <input type="submit" value="Start test">
-                        <input type="button" value="See result" onclick="navigate('hyper', 'result.html')">
+                        <input type="submit" value="Start test" class="btn btn-primary">
+                        <input type="button" value="See result" class="btn btn-primary" onclick="navigate('hyper', 'result.html')">
                     </form>
                 </div>
                 <div class="controllers">
-                    <h3>HTTP</h3>
+                    <h3>HTTPS</h3>
                     <form id="http-form">
                         <label for="protocol">Protocol: </label>
                         <select name="protocol" required>
                             <option value="">Select</option>
                             <option value="hyper">hyper</option>
                             <option value="ipfs">ipfs</option>
-                            <option value="http" selected>http</option>
+                            <option value="http" selected>https</option>
                         </select>
-                        <input type="text" name="url" placeholder="url" required>
+                        <label for="url">Site URL: </label>
+                        <input type="text" name="url" placeholder="URL" required>
                         <label for="name">Test name: </label>
                         <input type="text" name="name">
-                        <label for="amount">Amount of testers:</label>
+                        <label for="amount">Amount of testers (0 indicates all):</label>
                         <input type="number" name="amount" placeholder="amount" min="0" max="10000" value="0" required>
 
-                        <input type="submit" value="Start test">
-                        <input type="button" value="See result" onclick="navigate('http', 'result.html')">
+                        <input type="submit" value="Start test" class="btn btn-primary">
+                        <input type="button" value="See result" class="btn btn-primary" onclick="navigate('http', 'result.html')">
                     </form>
                 </div>
             </div>

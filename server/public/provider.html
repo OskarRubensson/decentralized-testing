@@ -16,41 +16,37 @@
             <h1>Dashboard » seeders & leechers</h1>
         </header>
         <div class="content">
-            <div class="status-wrapper">
-                <div class="status">
-                    <button id="send-data-btn" class="btn btn-danger">Send</button>
+            <div class="main">
+                <div class="status-wrapper">
+                    <div class="status">
+                        <button id="send-data-btn" class="btn btn-danger">Send</button>
+                    </div>
+                    <div class="status">
+                        <form id="leechers">
+                            <label for="amount">Amount of leechers</label>
+                            <input type="number" name="amount" id="amount" placeholder="amount" value="0">
+                            <input type="submit" class="btn btn-danger" value="Send">
+                        </form>
+                    </div>
                 </div>
-                <div class="status">
-                    <form id="leechers">
-                        <label for="amount">Amount of leechers</label>
-                        <input type="number" name="amount" id="amount" placeholder="amount" value="0">
-                        <input type="submit" class="btn btn-danger" value="Send">
+                <div class="controllers">
+                    <h3>IPFS</h3>
+                    <form id="ipfs">
+                        <label for="hash">Hash: </label>
+                        <input type="text" name="hash" placeholder="hash">
+                        <label for="quantity">Amount of seeders: </label>
+                        <input type="number" name="quantity" value="0" min="0">
                     </form>
                 </div>
-            </div>
-            <div class="controllers">
-                <h3>IPFS</h3>
-                <form id="ipfs">
-                    <div class="controll-wrapper">
+                <div class="controllers">
+                    <h3>Hyper</h3>
+                    <form id="hyper">
+                        <label for="hash">Hash: </label>
                         <input type="text" name="hash" placeholder="hash">
+                        <label for="quantity">Amount of seeders: </label>
                         <input type="number" name="quantity" value="0" min="0">
-                    </div>
-                    <div class="btn-group">
-                        <input type="button" value="Add field" onclick="addFieldToForm('ipfs')">
-                    </div>
-                </form>
-            </div>
-            <div class="controllers">
-                <h3>Hyper</h3>
-                <form id="hyper">
-                    <div class="controll-wrapper">
-                        <input type="text" name="hash" placeholder="hash">
-                        <input type="number" name="quantity" value="0" min="0">
-                    </div>
-                    <div class="btn-group">
-                        <input type="button" value="Add field" onclick="addFieldToForm('hyper')">
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -63,7 +63,7 @@ header h1 {
 }
 
 .main {
-    padding: 2em;
+    padding: 1.5em;
 }
 
 .results-btn {
@@ -83,10 +83,9 @@ header h1 {
     width: 48%;
     height: auto;
     background-color: white;
-    margin-top: 10px;
 
     border-radius: var(--border-radius);
-    padding: 1.5em;
+    padding: 1.0em;
 
     box-shadow: 0 1px 4px 0px rgb(204 197 185 / 50%);
 }
@@ -128,9 +127,10 @@ header h1 {
 
 form {
     display: flex;
-    height: 265px;
+    /* height: 275px; */
     flex-direction: column;
-    justify-content: space-evenly;
+    /* justify-content: space-between; */
+    row-gap: 0.3em;
 }
 
 input {
@@ -138,7 +138,7 @@ input {
     height: 30px;
     border-radius: var(--border-radius);
     border: var(--border-size) solid var(--border-color);
-    padding: 0 10px;
+    padding: 10px 10px;
 }
 
 input[type="number"] {
@@ -169,13 +169,13 @@ select {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 11em;
-    height: 50px;
+    width: 9em;
+    height: 40px;
     border-radius: var(--border-radius-btn);
 
     padding: 0 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
     border: 0;
     outline: 0;
 
@@ -188,7 +188,8 @@ select {
 }
 
 .btn-danger:hover {
-    background-color: #d14545;
+    /* background-color: #d14545; */
+    background-color: #de1b1b;
     color: white;
     cursor: pointer;
 }
@@ -210,7 +211,7 @@ select {
 }
 
 .btn-primary:hover {
-    background-color: #4a88c5;
+    background-color: #1976d4;
     color: white;
     cursor: pointer;
 }

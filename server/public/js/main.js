@@ -75,3 +75,12 @@ function navigate(key, filename) {
 function setResultToShow(key) {
     setLocalStorage('showResult', key);
 }
+/**
+ * Function for clearing a specific result in local storage
+ * @param {*} key 
+ * @returns 
+ */
+function clearSpecificResult(key) {
+    if(!confirm('Are you sure you want to clear '+ key +' results?')) return;
+    localStorage.removeItem(key);
+}
